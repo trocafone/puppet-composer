@@ -74,6 +74,12 @@ class composer (
   }
 
   $composer_full_path = "${composer_target_dir}/${composer_command_name}"
+
+  file { "${composer_target_dir}":
+    ensure  => directory,
+    owner   => $composer_user,
+  }
+
   exec { 'composer-install':
     command => "/usr/bin/wget --no-check-certificate -O ${composer_full_path} ${target}",
     user    => $composer_user,
@@ -88,6 +94,12 @@ class composer (
     mode    => '0755',
     group   => $group,
     require => Exec['composer-install'],
+  }
+
+  file { "/usr/local/bin/composer":
+    ensure  => link,
+    force   => true,
+    target  => "${composer_target_dir}/${composer_command_name}"
   }
 
   if $auto_update {

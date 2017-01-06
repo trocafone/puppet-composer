@@ -14,7 +14,7 @@
 #
 class composer::params {
   $phar_location = 'https://getcomposer.org/composer.phar'
-  $target_dir    = '/usr/local/bin'
+  $target_dir    = '/opt/composer'
   $command_name  = 'composer'
   $user          = 'root'
   $version       = undef
